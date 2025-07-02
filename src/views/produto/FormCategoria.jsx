@@ -4,7 +4,6 @@ import { Link, useLocation } from "react-router-dom";
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 import MenuSistema from '../../MenuSistema';
 import { notifySuccess } from '../../views/util';
-
 export default function FormProduto () {
 
 	const { state } = useLocation();
@@ -59,12 +58,16 @@ export default function FormProduto () {
 
        if (idProduto != null) { //Alteração:
            axios.put("http://localhost:8080/api/produto/" + idProduto, produtoRequest)
-           .then((response) => { notifySuccess('Produto alterado com sucesso.') })
-           .catch((error) => { notifySuccess('Erro ao alterar um produto.') })
+           .then((response) => { 
+            notifySuccess('Produto alterado com sucesso.') })
+           .catch((error) => { 
+            notifySuccess('Erro ao alterar um produto.') })
        } else { //Cadastro:
            axios.post("http://localhost:8080/api/produto", produtoRequest)
-           .then((response) => { notifySuccess('Produto cadastrado com sucesso.') })
-           .catch((error) => { notifySuccess('Erro ao incluir o produto.') })
+           .then((response) => { 
+            notifySuccess('Produto cadastrado com sucesso.') })
+           .catch((error) => { 
+            notifySuccess('Erro ao incluir o produto.') })
        }
    }
 

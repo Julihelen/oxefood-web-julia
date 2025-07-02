@@ -1,9 +1,10 @@
 import axios from "axios";
 import InputMask from 'comigo-tech-react-input-mask';
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 import MenuSistema from '../../MenuSistema';
+import { notifyError, notifySuccess } from '../../views/util';
 
 export default function FormCliente () {
     
@@ -32,7 +33,7 @@ export default function FormCliente () {
         }
 
     }, [state])
-
+    
 
     function salvar() {
 
@@ -56,12 +57,25 @@ export default function FormCliente () {
 
         } else { //Cadastro:
 
+            // axios.post("http://localhost:8080/api/cliente", clienteRequest)
+            // .then((response) => { 
+            //     console.log('Cliente cadastrado com sucesso.') 
+            // })
+            // .catch((error) => { 
+            //     console.log('Erro ao incluir o cliente.') 
+            // })
             axios.post("http://localhost:8080/api/cliente", clienteRequest)
-            .then((response) => { 
-                console.log('Cliente cadastrado com sucesso.') 
+            .then((response) => {
+                notifySuccess('Cliente cadastrado com sucesso.')
             })
-            .catch((error) => { 
-                console.log('Erro ao incluir o cliente.') 
+            .catch((error) => {
+                if (error.response.data.errors != undefined) {
+                    for (let i = 0; i < error.response.data.errors.length; i++) {
+                        notifyError(error.response.data.errors[i].defaultMessage)
+                    }
+                } else {
+                    notifyError(error.response.data.message)
+                }
             })
         }
 	}

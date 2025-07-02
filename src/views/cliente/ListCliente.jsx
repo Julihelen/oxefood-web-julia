@@ -18,7 +18,6 @@ export default function ListCliente () {
    }, [])
 
    function confirmaRemover(id) {
-
         setOpenModal(true)
         setIdRemover(id)
     }
